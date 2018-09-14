@@ -4,13 +4,14 @@
 #' @param gt                - a genotype matrix (samples, loci)
 #' @param initial_weights   - a vector of initial weights
 #' @param weights_max       - maximum weights for each individual
+#' @param weights_min       - minimum weights for each individual
 #' @param max_t             - maximum temperature 
 #' @return a list of output 
 #' @author Jason Bragg (jasongbragg@gmail.com)
 #' @export
 
 
-optimize_multi_objective <- function( v1=NULL, v2=NULL, measure_1=NULL, measure_2=NULL, max_steps=10000, N_t=NULL, initial_weights=NULL, weights_max=NULL, max_t=1, q=NULL, p_depends_delta=FALSE, disp=0, c1=1, c2=1, cboth=1, nda=FALSE, min_t=0, nd_samples=100) {
+optimize_multi_objective <- function( v1=NULL, v2=NULL, measure_1=NULL, measure_2=NULL, max_steps=10000, N_t=NULL, initial_weights=NULL, weights_max=NULL, weights_min=NULL, max_t=1, q=NULL, p_depends_delta=FALSE, disp=0, c1=1, c2=1, cboth=1, nda=FALSE, min_t=0, nd_samples=100) {
 
    cat( "\n\n" )
    cat( "  Multi-objective optimization commencing \n" )
@@ -98,7 +99,7 @@ optimize_multi_objective <- function( v1=NULL, v2=NULL, measure_1=NULL, measure_
 
       if (nda) {
 
-         cat("   First sample added to non-diminated archive  \n")
+         cat("   First sample added to non-dominated archive  \n")
          archive[[1]] <- list(value_1=summary_1, value_2=summary_2, weights=initial_weights)
 
       }
@@ -112,7 +113,7 @@ optimize_multi_objective <- function( v1=NULL, v2=NULL, measure_1=NULL, measure_
       # MAIN CHAIN LOOP
       while ( s <= max_steps & !nda_complete ) {
 
-         proposed_weights   <- propose_new_weights(weights, w_max=weights_max)
+         proposed_weights   <- propose_new_weights(weights, w_max=weights_max, w_min=weights_min)
 
          proposal_summary_1 <- generate_measure_value(v1, measure=measure_1, w=proposed_weights, q=q, disp=disp)
          proposal_summary_2 <- generate_measure_value(v2, measure=measure_2, w=proposed_weights, q=q, disp=disp)

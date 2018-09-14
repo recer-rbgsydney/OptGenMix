@@ -4,13 +4,14 @@
 #' @param gt                - a genotype matrix (samples, loci)
 #' @param initial_weights   - a vector of initial weights
 #' @param weights_max       - maximum weights for each individual
+#' @param weights_min       - minimum weights for each individual
 #' @param max_t             - maximum temperature 
 #' @return a list of output 
 #' @author Jason Bragg (jasongbragg@gmail.com)
 #' @export
 
 
-optimize_single_objective <- function( gt=NULL, sm=NULL, measure=NULL, max_steps=10000, N_t=NULL, initial_weights=NULL, weights_max=NULL, max_t=1, q=NULL, p_depends_delta=FALSE, disp=0) {
+optimize_single_objective <- function( gt=NULL, sm=NULL, measure=NULL, max_steps=10000, N_t=NULL, initial_weights=NULL, weights_max=NULL, weights_min=NULL, max_t=1, q=NULL, p_depends_delta=FALSE, disp=0) {
 
    proceed=TRUE
 
@@ -97,7 +98,7 @@ optimize_single_objective <- function( gt=NULL, sm=NULL, measure=NULL, max_steps
       # MAIN CHAIN LOOP
       while ( s <= max_steps ) {
 
-         proposed_weights <- propose_new_weights(weights, w_max=weights_max)
+         proposed_weights <- propose_new_weights(weights, w_max=weights_max, w_min=weights_min)
 
          proposal_summary <- generate_measure_value(v, measure=measure, w=proposed_weights, q=q, disp=disp)
 

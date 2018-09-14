@@ -1,7 +1,7 @@
 Package: OptGenMix
 Title: Optimization of genotype mixtures
-Version: 0.1
-Date: 2018-05-01
+Version: 0.2
+Date: 2018-09-14
 Author: person("Jason", "Bragg", email = "jasongbragg@gmail.com", role = c("aut", "cre"))
 Description: This package chooses mixtures of genotyped individuals that are optimized according to nominated criteria.
 Depends:
