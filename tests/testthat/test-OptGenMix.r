@@ -119,6 +119,27 @@ test_that("weighted_mean_vector",{
 })
 
 
+test_that("sum_of_squared_difference",{
+
+   v1 <- c(1,2,1,2)
+   v2 <- c(1,2,1,6)
+   w1 <- c(1,1,1,1)
+   w2 <- c(0,1,0,1)
+   w3 <- c(1,1,1,3)
+   d1 <- 1.5
+   d2 <- 2
+
+   ssd1 <- sum_of_squared_difference(v=v1,w=w1,disp=d1)
+   expect_equal( ssd1, 1)
+
+   ssd2 <- sum_of_squared_difference(v=v1,w=w2,disp=d2)
+   expect_equal( ssd2, 0)
+
+   ssd3 <- sum_of_squared_difference(v=v2,w=w3,disp=d2)
+   expect_equal( ssd3, 50)
+
+})
+
 
 test_that("temp_1",{
   s     <- 1
@@ -209,3 +230,25 @@ test_that("generate_measure_value",{
   
 })
 
+
+# archive <- list()
+# archive[[1]] <- list(value_1=1, value_2=1, weights=c(1,1,1,1,1))
+# archive <- reconcile_sample_nondominated_archive(1.5,0.5,c(0,1,1,3),archive)
+
+
+#disp <- 0.5
+#w <- c(1,1,1,1,1,1)
+
+
+#vs <- c(0,1,0,1,0,1)
+#abs((sum(vs*w) / sum(w)) - disp)
+#sum(abs(vs-disp)*w) / sum(w)
+#weighted_mean_of_absolute_difference(vs, w, disp)
+#weighted_mean_of_vector(vs,w,disp)
+
+#vs <- c(0.25,0.75,0.25,0.75,0.25,0.75)
+#abs((sum(vs*w) / sum(w)) - disp)
+#sum(abs(vs-disp)*w) / sum(w)
+
+#weighted_mean_of_absolute_difference(vs, w, disp)
+#weighted_mean_of_vector(vs,w, disp)
