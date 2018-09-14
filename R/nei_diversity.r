@@ -14,8 +14,13 @@ nei_diversity <- function(gt, w=NULL) {
    if (is.null(w)) {
       p  <- colSums(gt) / (nrow(gt) *2)
    } else {
-      wm <- matrix(rep(w,ncol(gt)),ncol=ncol(gt),byrow=FALSE) 
-      p  <- colSums(gt*wm) / (nrow(gt)*2) / mean(w)
+
+      if (nrow(gt) == length(w)) {
+         wm <- matrix(rep(w,ncol(gt)),ncol=ncol(gt),byrow=FALSE) 
+         p  <- colSums(gt*wm) / (nrow(gt)*2) / mean(w)
+      } else {
+         cat("   weights supplied: must have length equal to number of rows in gt \n")
+      }
    }
 
    # calculate diversity from frequencies
