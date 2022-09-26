@@ -7,14 +7,16 @@ that maximize a function (e.g. a measure of genetic diversity)}
 \usage{
 optimize_multi_objective(v1 = NULL, v2 = NULL, measure_1 = NULL,
   measure_2 = NULL, max_steps = 10000, N_t = NULL,
-  initial_weights = NULL, weights_max = NULL, max_t = 1, q = NULL,
-  p_depends_delta = FALSE, disp = 0, c1 = 1, c2 = 1, cboth = 1,
-  nda = FALSE, min_t = 0, nd_samples = 100)
+  initial_weights = NULL, weights_max = NULL, weights_min = NULL,
+  max_t = 1, q = NULL, p_depends_delta = FALSE, disp = 0, c1 = 1,
+  c2 = 1, cboth = 1, nda = FALSE, min_t = 0, nd_samples = 100)
 }
 \arguments{
 \item{initial_weights}{- a vector of initial weights}
 
 \item{weights_max}{- maximum weights for each individual}
+
+\item{weights_min}{- minimum weights for each individual}
 
 \item{max_t}{- maximum temperature}
 

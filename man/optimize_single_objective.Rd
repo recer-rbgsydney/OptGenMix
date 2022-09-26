@@ -7,8 +7,8 @@ that maximize a function (e.g. a measure of genetic diversity)}
 \usage{
 optimize_single_objective(gt = NULL, sm = NULL, measure = NULL,
   max_steps = 10000, N_t = NULL, initial_weights = NULL,
-  weights_max = NULL, max_t = 1, q = NULL, p_depends_delta = FALSE,
-  disp = 0)
+  weights_max = NULL, weights_min = NULL, max_t = 1, q = NULL,
+  p_depends_delta = FALSE, disp = 0)
 }
 \arguments{
 \item{gt}{- a genotype matrix (samples, loci)}
@@ -16,6 +16,8 @@ optimize_single_objective(gt = NULL, sm = NULL, measure = NULL,
 \item{initial_weights}{- a vector of initial weights}
 
 \item{weights_max}{- maximum weights for each individual}
+
+\item{weights_min}{- minimum weights for each individual}
 
 \item{max_t}{- maximum temperature}
 }
