@@ -11,7 +11,7 @@
 #' @export
 
 
-optimize_single_objective <- function( gt=NULL, sm=NULL, measure=NULL, max_steps=10000, N_t=NULL, initial_weights=NULL, weights_max=NULL, weights_min=NULL, max_t=1, q=NULL, p_depends_delta=FALSE, disp=0) {
+optimize_single_objective <- function( gt=NULL, sm=NULL, measure=NULL, max_steps=10000, N_t=NULL, initial_weights=NULL, weights_max=NULL, weights_min=NULL, max_t=1, q=NULL, m=NULL, p_depends_delta=TRUE, disp=0, pMAC_mode=FALSE, Nmat=NULL) {
 
    proceed=TRUE
 
@@ -62,12 +62,18 @@ optimize_single_objective <- function( gt=NULL, sm=NULL, measure=NULL, max_steps
    }
 
 
+   if ( measure == "psfs") {
+      require(sfsCalcs)
+   }
+
+
+
 
    summary <- NULL
 
    
    # generate a value of objective measure for initial
-   summary <- generate_measure_value(v, measure=measure, w=initial_weights, q=q, disp=disp)
+   summary <- generate_measure_value(v, measure=measure, w=initial_weights, q=q, m=m, disp=disp, pMAC_mode=pMAC_mode, Nmat=Nmat)
 
    # if objective measure initial returns NULL, problem
    if (is.null(summary)) {
@@ -100,7 +106,7 @@ optimize_single_objective <- function( gt=NULL, sm=NULL, measure=NULL, max_steps
 
          proposed_weights <- propose_new_weights(weights, w_max=weights_max, w_min=weights_min)
 
-         proposal_summary <- generate_measure_value(v, measure=measure, w=proposed_weights, q=q, disp=disp)
+         proposal_summary <- generate_measure_value(v, measure=measure, w=proposed_weights, q=q, m=m, disp=disp, pMAC_mode=pMAC_mode, Nmat=Nmat)
 
          temp             <- temp_scheduler(s, max_steps, max_t=max_t)
 
