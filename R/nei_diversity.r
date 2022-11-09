@@ -11,17 +11,28 @@
 nei_diversity <- function(gt, w=NULL) {
 
    # estimate allele frequencies
-   if (is.null(w)) {
-      p  <- colSums(gt) / (nrow(gt) *2)
-   } else {
+   calc_afs <- function(gt, w=NULL) {
 
-      if (nrow(gt) == length(w)) {
-         wm <- matrix(rep(w,ncol(gt)),ncol=ncol(gt),byrow=FALSE) 
-         p  <- colSums(gt*wm) / (nrow(gt)*2) / mean(w)
+      if (is.null(w)) {
+
+         p  <- colSums(gt,na.rm=TRUE) / (colSums(!is.na(gt))*2)
+
       } else {
-         cat("   weights supplied: must have length equal to number of rows in gt \n")
+
+         if (nrow(gt) == length(w)) {
+            wm <- matrix(rep(w,ncol(gt)),ncol=ncol(gt),byrow=FALSE)
+            gtnn <- gt
+            gtnn[ is.na(gt) ] <- 0
+            gtnn[ !is.na(gt) ] <- 1 
+            p  <- colSums(gt*wm,na.rm=TRUE) / colSums( gtnn * wm *2)
+         } else {
+            cat("   weights supplied: must have length equal to number of rows in gt \n")
+         }
       }
+      return(p)
    }
+
+   p <- calc_afs(gt, w)
 
    # calculate diversity from frequencies
    Hs <- 0

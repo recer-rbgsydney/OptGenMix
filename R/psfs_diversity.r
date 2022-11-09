@@ -9,7 +9,7 @@
 #' @author Jason Bragg (jasongbragg@gmail.com)
 #' @export
 
-psfs_diversity <- function(gt, m, w=NULL) {
+psfs_diversity <- function(gt, m, w=NULL, pMAC_mode=FALSE, Nmat=NULL) {
 
    if (is.null(m)) {
       m = 20
@@ -28,7 +28,12 @@ psfs_diversity <- function(gt, m, w=NULL) {
       }
    }
 
-   projected_SFS <- project_SFS_from_genotypes(wgt, m)
+   if (pMAC_mode) {
+      projected_SFS <- project_SFS_from_MAC(wgt, Nmat, m)
+   } else {
+      projected_SFS <- project_SFS_from_genotypes(wgt, m)
+   }
+
    fixedSFS <- projected_SFS[1] + projected_SFS[m+1]
    ppSFS <- (sum(projected_SFS) - fixedSFS)/sum(projected_SFS)
 
